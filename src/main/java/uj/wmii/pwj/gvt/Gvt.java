@@ -70,6 +70,9 @@ public class Gvt {
 				detach(fileName, commitMessage);
 			else if (command.equals("commit"))
 				commit(fileName, commitMessage);
+			else if (command.equals("checkout")) {
+				checkout(Integer.parseInt(args[1]));
+			}
 			else {
 				exitHandler.exit(1, "Unknown command " + command + ".");
 				return;
@@ -261,4 +264,22 @@ public class Gvt {
 		exitHandler.exit(0, result);
 	}
 
+	private void checkout(int version) {
+		Version desiredVersion = null;
+
+		ArrayList<Version> versions = load();
+
+		for (int i = 0; i < versions.size() && desiredVersion == null; i++)
+			if (versions.get(i).getVersionID() == version)
+				desiredVersion = versions.get(i);
+		
+		if (desiredVersion == null) {
+			exitHandler.exit(60, "Invalid version number: " + version);
+			return;
+		}
+
+
+		desiredVersion.reinstantiate();
+		exitHandler.exit(0, "Checkout successful for version: " + version);
+	}
 }

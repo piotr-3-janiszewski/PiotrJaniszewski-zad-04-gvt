@@ -79,6 +79,12 @@ public class Version implements Serializable{
 		return result;
 	}
 
+	public void reinstantiate() {
+		for (SavedFile savedFile : savedFiles) {
+			savedFile.reinstantiate();
+		}
+	}
+
 	public int getVersionID() {
 		return versionID;
 	}

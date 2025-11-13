@@ -37,5 +37,15 @@ public class SavedFile implements Serializable {
 		catch(Exception e) {
 		}
 	}
+
+	public void reinstantiate() {
+		try {
+			Files.write(Path.of(name), content);
+		}
+		catch(Exception e) {
+			e.printStackTrace(System.err);
+			System.err.println("Underlying system problem. See ERR for details.");
+		}
+	}
 }
 
